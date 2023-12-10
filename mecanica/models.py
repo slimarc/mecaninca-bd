@@ -54,8 +54,4 @@ class OrdemDeServico(models.Model):
     def __str__(self):
         return f"Ordem #{self.numero_ordem}"
 
-class HistoricoManutencao(models.Model):
-    veiculo = models.ForeignKey(Veiculo, on_delete=models.PROTECT)
-    ordem_de_servico = models.ManyToManyField(OrdemDeServico)
-
     

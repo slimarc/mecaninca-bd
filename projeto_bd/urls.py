@@ -16,18 +16,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from mecanica.views import ClienteViewSet, VeiculoViewSet, ServicoViewSet, MecanicoViewSet, AgendamentoServicoViewSet, OrdemDeServicoViewSet, HistoricoManutencaoViewSet
+
+from mecanica import views
+from mecanica.views import ClienteViewSet, VeiculoViewSet, ServicoViewSet, MecanicoViewSet, AgendamentoServicoViewSet, \
+    OrdemDeServicoViewSet
 
 router = routers.DefaultRouter()
-router.register('cliente', ClienteViewSet, basename='cliente')
-router.register('veiculo', VeiculoViewSet, basename='veiculo')
-router.register('servico', ServicoViewSet, basename='servico')
-router.register('mecanico', MecanicoViewSet, basename='mecanico')
-router.register('agendamento', AgendamentoServicoViewSet, basename='agendamento')
-router.register('ordem', OrdemDeServicoViewSet, basename='ordem')
-router.register('historico', HistoricoManutencaoViewSet, basename='historico')
+router.register('clientes', ClienteViewSet, basename='clientes')
+router.register('veiculos', VeiculoViewSet, basename='veiculos')
+router.register('servicos', ServicoViewSet, basename='servicos')
+router.register('mecanicos', MecanicoViewSet, basename='mecanicos')
+router.register('agendamentos', AgendamentoServicoViewSet, basename='agendamentos')
+router.register('ordens', OrdemDeServicoViewSet, basename='ordens')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('veiculos/<str:cpf>/', views.veiculos_por_cliente, name='veiculos_por_cliente'),
+    path('ordens/<str:placa>/', views.historico_do_veiculo, name='historico_do_veiculo'),
     path('', include(router.urls))
 ]
