@@ -38,8 +38,8 @@ class Mecanico(models.Model):
 class AgendamentoServico(models.Model):
     numero_agendamento = models.AutoField(primary_key=True)
     veiculo = models.ForeignKey(Veiculo, on_delete=models.PROTECT)
-    data_agendamento = models.DateField()
-    data_previsao = models.DateField()
+    data_previsao_entrada = models.DateField()
+    data_previsao_saida = models.DateField()
 
     def __str__(self):
         return f"Agendamento #{self.numero_agendamento}"

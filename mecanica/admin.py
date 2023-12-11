@@ -26,7 +26,7 @@ class MecanicosAdmin(admin.ModelAdmin):
     list_per_page = 20
 
 class AgendamentosServicoAdmin(admin.ModelAdmin):
-    list_display = ('numero_agendamento', 'veiculo', 'data_agendamento', 'data_previsao')
+    list_display = ('numero_agendamento', 'veiculo', 'data_previsao_entrada', 'data_previsao_saida')
     list_display_links = ('numero_agendamento', 'veiculo')
     search_fields = ('numero_agendamento',)
     list_per_page = 20
