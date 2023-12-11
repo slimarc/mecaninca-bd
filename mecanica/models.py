@@ -3,7 +3,7 @@ from django.db import models
 class Cliente(models.Model):
     nome = models.CharField(max_length=100)
     cpf = models.CharField(max_length=11, unique=True, primary_key=True)
-    telefone = models.CharField(max_length=14, unique=True)
+    telefone = models.CharField(max_length=15, unique=True)
     cep = models.CharField(max_length=10)
 
     def __str__(self):
@@ -30,7 +30,7 @@ class Mecanico(models.Model):
     identificacao = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=100)
     especialidade = models.CharField(max_length=100)
-    telefone = models.CharField(max_length=14, unique=True)
+    telefone = models.CharField(max_length=15, unique=True)
     
     def __str__(self):
         return self.nome
