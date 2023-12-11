@@ -31,7 +31,7 @@ router.register('ordens', OrdemDeServicoViewSet, basename='ordens')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('veiculos/<str:cpf>/', views.veiculos_por_cliente, name='veiculos_por_cliente'),
+    path('clientes/<str:cpf>/veiculos/', ClienteViewSet.veiculos_por_cliente, name='veiculos_por_cliente'),
     path('ordens/<str:placa>/', views.historico_do_veiculo, name='historico_do_veiculo'),
     path('', include(router.urls))
 ]
