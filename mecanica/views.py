@@ -17,18 +17,35 @@ class ClienteViewSet(viewsets.ModelViewSet):
     authentication_classes = [BasicAuthentication]
     permission_classes = [IsAuthenticated]
 
+    def veiculos_por_cliente(self, cpf):
+        cliente = get_object_or_404(Cliente, cpf=cpf)
+        veiculos = Veiculo.objects.filter(cliente=cliente)
+        veiculos_json = [{
+            'placa': veiculo.placa if veiculo.placa else None,
+            'modelo': veiculo.modelo if veiculo.modelo else None,
+            'ano_veiculo': veiculo.ano_veiculo if veiculo.ano_veiculo else None
+        }
+            for veiculo in veiculos]
+        return JsonResponse({'cliente': cliente.nome, 'veiculos': veiculos_json})
+
+
 class VeiculoViewSet(viewsets.ModelViewSet):
     queryset = Veiculo.objects.all()
     serializer_class = VeiculoSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     search_fields = ['placa']
     filterset_fields = ['ano_veiculo', 'modelo']
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
 
 class ServicoViewSet(viewsets.ModelViewSet):
     queryset = Servico.objects.all()
     serializer_class = ServicoSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     search_fields = ['nome']
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
 class MecanicoViewSet(viewsets.ModelViewSet):
     queryset = Mecanico.objects.all()
@@ -36,6 +53,8 @@ class MecanicoViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     search_fields = ['identificacao']
     filterset_fields = ['especialidade']
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
 class AgendamentoServicoViewSet(viewsets.ModelViewSet):
     queryset = AgendamentoServico.objects.all()
@@ -43,6 +62,8 @@ class AgendamentoServicoViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     search_fields = ['numero_agendamento']
     filterset_fields = ['veiculo']
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
 class OrdemDeServicoViewSet(viewsets.ModelViewSet):
     queryset = OrdemDeServico.objects.all()
@@ -50,17 +71,9 @@ class OrdemDeServicoViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     search_fields = ['numero_ordem','mecanico']
     filterset_fields = ['veiculo','mecanico']
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
-def veiculos_por_cliente(request, cpf):
-    cliente = get_object_or_404(Cliente, cpf=cpf)
-    veiculos = Veiculo.objects.filter(cliente=cliente)
-    veiculos_json = [{
-                      'placa': veiculo.placa if veiculo.placa else None,
-                      'modelo': veiculo.modelo if veiculo.modelo else None,
-                      'ano_veiculo': veiculo.ano_veiculo if veiculo.ano_veiculo else None
-                     }
-                     for veiculo in veiculos]
-    return JsonResponse({'cliente': cliente.nome, 'veiculos': veiculos_json})
 
 def historico_do_veiculo(request, placa):
     veiculo = get_object_or_404(Veiculo, placa=placa)
