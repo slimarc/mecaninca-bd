@@ -19,7 +19,7 @@ from rest_framework import routers
 
 from mecanica import views
 from mecanica.views import ClienteViewSet, VeiculoViewSet, ServicoViewSet, MecanicoViewSet, AgendamentoServicoViewSet, \
-    OrdemDeServicoViewSet
+    OrdemDeServicoViewSet, PecaViewSet, PecaQuantidadeViewSet, OrdemDeCompraViewSet, FornecedorViewSet
 
 router = routers.DefaultRouter()
 router.register('clientes', ClienteViewSet, basename='clientes')
@@ -28,10 +28,14 @@ router.register('servicos', ServicoViewSet, basename='servicos')
 router.register('mecanicos', MecanicoViewSet, basename='mecanicos')
 router.register('agendamentos', AgendamentoServicoViewSet, basename='agendamentos')
 router.register('ordens', OrdemDeServicoViewSet, basename='ordens')
+router.register('pecas', PecaViewSet, basename='pecas')
+router.register('pecas-quantidade', PecaQuantidadeViewSet, basename='pecas-quantidade')
+router.register('ordens-compra', OrdemDeCompraViewSet, basename='ordens-compra')
+router.register('fornecedores', FornecedorViewSet, basename='fornecedores')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('clientes/<str:cpf>/veiculos/', ClienteViewSet.veiculos_por_cliente, name='veiculos_por_cliente'),
-    path('ordens/<str:placa>/', views.historico_do_veiculo, name='historico_do_veiculo'),
+    path('veiculos/<str:placa>/ordens', views.historico_do_veiculo, name='historico_do_veiculo'),
     path('', include(router.urls))
 ]

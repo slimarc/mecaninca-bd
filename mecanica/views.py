@@ -1,8 +1,13 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, filters
-from .models import Cliente, Veiculo, Servico, Mecanico, AgendamentoServico, OrdemDeServico
-from .serializers import ClienteSerializer, VeiculoSerializer, ServicoSerializer, MecanicoSerializer, AgendamentoServicoSerializer, OrdemDeServicoSerializer
+from rest_framework import viewsets, filters, status
+from django.contrib import messages
+from rest_framework.response import Response
+from .models import Cliente, Veiculo, Servico, Mecanico, AgendamentoServico, OrdemDeServico, Peca, PecaQuantidade, \
+    OrdemDeCompra, Fornecedor
+from .serializers import ClienteSerializer, VeiculoSerializer, ServicoSerializer, MecanicoSerializer, \
+    AgendamentoServicoSerializer, OrdemDeServicoSerializer, PecaSerializer, PecaQuantidadeSerializer, \
+    OrdemDeCompraSerializer, FornecedorSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -28,6 +33,12 @@ class ClienteViewSet(viewsets.ModelViewSet):
             for veiculo in veiculos]
         return JsonResponse({'cliente': cliente.nome, 'veiculos': veiculos_json})
 
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+
+        return Response({"detail": f"Cliente {instance} foi deletado com sucesso."}, status=status.HTTP_204_NO_CONTENT)
+
 
 class VeiculoViewSet(viewsets.ModelViewSet):
     queryset = Veiculo.objects.all()
@@ -38,6 +49,12 @@ class VeiculoViewSet(viewsets.ModelViewSet):
     authentication_classes = [BasicAuthentication]
     permission_classes = [IsAuthenticated]
 
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+
+        return Response({"detail": f"Veículo {instance} foi deletado com sucesso."}, status=status.HTTP_204_NO_CONTENT)
+
 
 class ServicoViewSet(viewsets.ModelViewSet):
     queryset = Servico.objects.all()
@@ -46,6 +63,13 @@ class ServicoViewSet(viewsets.ModelViewSet):
     search_fields = ['nome']
     authentication_classes = [BasicAuthentication]
     permission_classes = [IsAuthenticated]
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+
+        return Response({"detail": f"Serviço {instance} foi deletado com sucesso."}, status=status.HTTP_204_NO_CONTENT)
+
 
 class MecanicoViewSet(viewsets.ModelViewSet):
     queryset = Mecanico.objects.all()
@@ -56,6 +80,12 @@ class MecanicoViewSet(viewsets.ModelViewSet):
     authentication_classes = [BasicAuthentication]
     permission_classes = [IsAuthenticated]
 
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+
+        return Response({"detail": f"Mecânico {instance} foi deletado com sucesso."}, status=status.HTTP_204_NO_CONTENT)
+
 class AgendamentoServicoViewSet(viewsets.ModelViewSet):
     queryset = AgendamentoServico.objects.all()
     serializer_class = AgendamentoServicoSerializer
@@ -65,15 +95,26 @@ class AgendamentoServicoViewSet(viewsets.ModelViewSet):
     authentication_classes = [BasicAuthentication]
     permission_classes = [IsAuthenticated]
 
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+
+        return Response({"detail": f"Agendamento {instance} foi deletado com sucesso."}, status=status.HTTP_204_NO_CONTENT)
+
 class OrdemDeServicoViewSet(viewsets.ModelViewSet):
     queryset = OrdemDeServico.objects.all()
     serializer_class = OrdemDeServicoSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    search_fields = ['numero_ordem','mecanico']
-    filterset_fields = ['veiculo','mecanico']
+    search_fields = ['numero_ordem', 'mecanico']
+    filterset_fields = ['veiculo', 'mecanico']
     authentication_classes = [BasicAuthentication]
     permission_classes = [IsAuthenticated]
 
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+
+        return Response({"detail": f"Ordem de serviço {instance} foi deletado com sucesso."}, status=status.HTTP_204_NO_CONTENT)
 
 def historico_do_veiculo(request, placa):
     veiculo = get_object_or_404(Veiculo, placa=placa)
@@ -92,3 +133,62 @@ def historico_do_veiculo(request, placa):
                     ]
                    } for ordem in ordens]
     return JsonResponse({'veiculo': veiculo.placa, 'ordens': ordens_json})
+
+
+class PecaViewSet(viewsets.ModelViewSet):
+    queryset = Peca.objects.all()
+    serializer_class = PecaSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    search_fields = ['nome']
+    filterset_fields = ['preco', 'estoque']
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+
+        return Response({"detail": f"Peça {instance} foi deletado com sucesso."}, status=status.HTTP_204_NO_CONTENT)
+
+class PecaQuantidadeViewSet(viewsets.ModelViewSet):
+    queryset = PecaQuantidade.objects.all()
+    serializer_class = PecaQuantidadeSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    search_fields = ['peca']
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+
+        return Response({"detail": f" Quantidade de peças {instance} deletado com sucesso."}, status=status.HTTP_204_NO_CONTENT)
+
+class OrdemDeCompraViewSet(viewsets.ModelViewSet):
+    queryset = OrdemDeCompra.objects.all()
+    serializer_class = OrdemDeCompraSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    search_fields = ['fornecedor']
+    filterset_fields = ['data_pedido', 'data_entrega']
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+
+        return Response({"detail": f"Ordem de compra {instance} foi deletado com sucesso."}, status=status.HTTP_204_NO_CONTENT)
+
+class FornecedorViewSet(viewsets.ModelViewSet):
+    queryset = Fornecedor.objects.all()
+    serializer_class = FornecedorSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    search_fields = ['nome', 'cnpj']
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+
+        return Response({"detail": f"Fornecedor {instance} foi deletado com sucesso."}, status=status.HTTP_204_NO_CONTENT)
