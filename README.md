@@ -7,7 +7,7 @@
 
 ## Postman :triangular_flag_on_post::
 
--  [Documentação postman](https://documenter.getpostman.com/view/23048135/VUxKSUdQ#intro)
+-  [Documentação postman](https://documenter.getpostman.com/view/23048135/2s9Ykhi4rd#363d3c33-4b7b-412f-bff8-629ae808fc58)
 
 ## Tecnologias :rocket::
 
