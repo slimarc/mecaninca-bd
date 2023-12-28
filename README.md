@@ -2,7 +2,7 @@
 
 ## Sobre 🔎:
 
-<p align="justify">Este projeto foi feito como atividade acadêmica da matéria de Banco de Dados do curso de Ciência, Tecnologia e Inovação da Unisersidade Federal da Bahia. Ao longo do semestre foi entregue temas para modelagem de um banco de dados, dado fim da modelagem foi necessário implementar em alguma linguagem de programação. As estapas do trabalho funcionaram dessa forma:</p>
+<p align="justify">Este projeto foi feito como atividade acadêmica da matéria de Banco de Dados do curso de Ciência, Tecnologia e Inovação da Unisersidade Federal da Bahia. Ao longo do semestre foi entregue um tema para modelagem, dado fim da modelagem foi necessário implementar em alguma linguagem de programação. As estapas do trabalho funcionaram dessa forma:</p>
     
 <h3>Primeira parte do Trabalho</h3>
 
