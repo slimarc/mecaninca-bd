@@ -2,8 +2,20 @@
 
 ## Sobre 🔎:
 
-<p align="justify">Um app que simula o funcionamento de uma mecânica.</p>
+<p align="justify">Este projeto foi feito como atividade acadêmica da matéria de Banco de Dados do curso de Ciência, Tecnologia e Inovação da Unisersidade Federal da Bahia. Ao longo do semestre foi entregue temas para modelagem de um banco de dados, dado fim da modelagem foi necessário implementar em alguma linguagem de programação. As estapas do trabalho funcionaram dessa forma:</p>
+    
+<h3>Primeira parte do Trabalho</h3>
 
+- Identificar as principais entidades e relacionamentos do problema que devem criar o banco de dados;
+- O documento deve ter até 2 laudas (2 páginas frente e verso).
+
+<h3>Segunda parte do Trabalho</h3>
+
+- Para o processo indicado pelo grupo, elaborem os códigos em SQL para criar as tabelas e as popularem (preencherem). Junto com o código, deve vir uma descrição dos campos das tabelas e das respectivas associações geradas a partir do relacionamento.
+
+<h3>Terceira parte do Trabalho</h3>
+
+- A terceira parte do trabalho consiste em implementar em uma linguagem de programação para realizar a manipulação das tabelas no banco de dados criado. 
 
 ## Postman :triangular_flag_on_post::
 
